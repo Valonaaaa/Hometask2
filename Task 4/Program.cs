@@ -17,12 +17,14 @@ internal class Program
         PrintState(previous);
 
         bool run = true;
+        int i = 0;
         while (run)
         {
             Console.ReadKey();
 
             var current = GetNewGeneration(previous);
 
+            Console.WriteLine($"Step: {i++}");
             PrintState(current);
 
             if (Compare(current, previous) || IsEmpty(current))
@@ -108,18 +110,20 @@ internal class Program
             for (int j = 0; j < rowLength; j++)
             {
                 int aliveCount = GetAliveCount(matrix, i, j);
-                if (aliveCount <= 1 || aliveCount >= 3)
+                bool previouslyAlive = matrix[i, j] == '+';
+                if (aliveCount == 2 && previouslyAlive)
                 {
-                    result[i, j] = '-';
+                    result[i, j] = '+';
                 }
-                else if (aliveCount == 2)
+                else if (aliveCount == 3)
                 {
                     result[i, j] = '+';
                 }
                 else
                 {
-                    result[i, j] = matrix[i, j];
+                    result[i, j] = '-';
                 }
+
             }
         }
 
